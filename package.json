@@ -1,0 +1,36 @@
+{
+  "name": "rescript-contentful",
+  "version": "1.0.0",
+  "description": "ReScript bindings for Contentful",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arafatamim/rescript-contentful.git"
+  },
+  "bugs": {
+    "url": "https://github.com/arafatamim/rescript-contentful/issues"
+  },
+  "homepage": "https://github.com/arafatamim/rescript-contentful#readme",
+  "scripts": {
+    "prepare": "rescript clean -with-deps && rescript build",
+    "build": "rescript build",
+    "start": "rescript build -w",
+    "clean": "rescript clean"
+  },
+  "keywords": [
+    "rescript",
+    "reasonml",
+    "bucklescript",
+    "contentful"
+  ],
+  "author": "Tamim Arafat <tamim.arafat@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "contentful": "9.1.4"
+  },
+  "peerDependencies": {
+    "contentful": "^9.1.4"
+  },
+  "devDependencies": {
+    "rescript": "^9.1.4"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "rescript-contentful",
+  "version": "1.0.0",
+  "sources": {
+    "dir" : "src",
+    "subdirs" : true
+  },
+  "package-specs": {
+    "module": "es6",
+    "in-source": true
+  },
+  "suffix": ".bs.js",
+  "namespace": false
+}

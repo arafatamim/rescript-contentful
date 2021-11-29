@@ -31,7 +31,7 @@ client
 ->Promise.then(asset => { /* do something */ })
 ```
 
-See [DOCUMENTATION.md](https://github.com/arafatamim/rescript-swr/blob/main/DOCUMENTATION.md) for a more detailed outline of the API.
+See [DOCUMENTATION.md](https://github.com/arafatamim/rescript-contentful/blob/main/DOCUMENTATION.md) for a more detailed outline of the API.
 
 ## License
 MIT Licensed. See LICENSE.md.

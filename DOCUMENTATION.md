@@ -104,6 +104,6 @@ let parseEntries: (t, 'raw) => Js.Promise.t<entryCollection<'fields>>
 ```
 
 ### sync
-```
+```rescript
 let sync: (t, 'query) => Js.Promise.t<syncCollection>
 ```

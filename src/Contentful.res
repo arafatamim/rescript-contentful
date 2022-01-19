@@ -210,8 +210,8 @@ external createClient: clientOpts<'adapter, 'headers, 'httpAgent, 'httpsAgent, '
 @send
 external getContentTypes: (t, ~query: 'query=?, unit) => Js.Promise.t<contentTypeCollection> =
   "getContentTypes"
-@send
 @send external getEntry: (t, string) => Js.Promise.t<option<entry<'fields>>> = "getEntry"
+@send
 external getEntries: (t, ~query: 'query=?, unit) => Js.Promise.t<entryCollection<'fields>> =
   "getEntries"
 @send external getSpace: t => Js.Promise.t<space> = "getSpace"
@@ -220,4 +220,3 @@ external getEntries: (t, ~query: 'query=?, unit) => Js.Promise.t<entryCollection
 @send external getTags: (t, ~query: 'query=?, unit) => Js.Promise.t<tagCollection> = "getTags"
 @send external parseEntries: (t, 'raw) => Js.Promise.t<entryCollection<'fields>> = "parseEntries"
 @send external sync: (t, 'query) => Js.Promise.t<syncCollection> = "sync"
-

@@ -1,5 +1,10 @@
 type t
 
+type assetKey = {
+  secret: string,
+  policy: string,
+}
+
 type tagLink = {"sys": {"type": [#Link], "linkType": [#Tag], "id": string}}
 
 type metadata = {"tags": array<tagLink>}
@@ -144,13 +149,15 @@ type axiosProxyConfig = {
   "host": string,
   "port": int,
   "auth": {"username": string, "password": string},
+  "protocol": string,
 }
 
 @obj
 external makeAxiosProxyConfig: (
   ~host: string,
-  ~port: int=?,
+  ~port: int,
   ~auth: {"username": string, "password": string}=?,
+  ~protocol: string=?,
   unit,
 ) => axiosProxyConfig = ""
 
@@ -191,8 +198,6 @@ external makeClientOpts: (
   ~adapter: 'adapter=?,
   ~application: string=?,
   ~integration: string=?,
-  ~resolveLinks: bool=?,
-  ~removeUnresolved: bool=?,
   ~retryOnError: bool=?,
   ~logHandler: (. clientLogLevel, option<'data>) => unit=?,
   ~timeout: int=?,
@@ -204,6 +209,7 @@ external makeClientOpts: (
 external createClient: clientOpts<'adapter, 'headers, 'httpAgent, 'httpsAgent, 'data> => t =
   "createClient"
 
+@send external createAssetKey: (t, int) => Js.Promise.t<assetKey> = "createAssetKey"
 @send external getAsset: (t, string, ~query: 'query=?, unit) => Js.Promise.t<asset> = "getAsset"
 @send external getAssets: (t, ~query: 'query=?, unit) => Js.Promise.t<assetCollection> = "getAssets"
 @send external getContentType: (t, string) => Js.Promise.t<contentType> = "getContentType"
@@ -220,3 +226,8 @@ external getEntries: (t, ~query: 'query=?, unit) => Js.Promise.t<entryCollection
 @send external getTags: (t, ~query: 'query=?, unit) => Js.Promise.t<tagCollection> = "getTags"
 @send external parseEntries: (t, 'raw) => Js.Promise.t<entryCollection<'fields>> = "parseEntries"
 @send external sync: (t, 'query) => Js.Promise.t<syncCollection> = "sync"
+
+@get external withoutLinkResolution: t => t = "withoutLinkResolution"
+@get external withoutUnresolvableLinks: t => t = "withoutUnresolvableLinks"
+@get external withAllLocales: t => t = "withAllLocales"
+@get external version: t => string = "version"

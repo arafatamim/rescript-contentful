@@ -1,6 +1,6 @@
 {
   "name": "rescript-contentful",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "ReScript bindings for Contentful",
   "repository": {
     "type": "git",
@@ -25,10 +25,10 @@
   "author": "Tamim Arafat <tamim.arafat@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "contentful": "9.1.4"
+    "contentful": "10.0.0-beta-v10.6"
   },
   "peerDependencies": {
-    "contentful": "^9.1.4"
+    "contentful": "^10.0.0-beta-v10.6"
   },
   "devDependencies": {
     "rescript": "^9.1.4"

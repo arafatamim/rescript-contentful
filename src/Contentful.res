@@ -145,65 +145,36 @@ type tagCollection = contentfulCollection<tag>
 
 type clientLogLevel = [#error | #warning | #info]
 
-type axiosProxyConfig = {
-  "host": string,
-  "port": int,
-  "auth": {"username": string, "password": string},
-  "protocol": string,
-}
+type proxyAuth = {username: string, password: string}
 
-@obj
-external makeAxiosProxyConfig: (
-  ~host: string,
-  ~port: int,
-  ~auth: {"username": string, "password": string}=?,
-  ~protocol: string=?,
-  unit,
-) => axiosProxyConfig = ""
+type axiosProxyConfig = {
+  host: string,
+  port: int,
+  auth?: proxyAuth,
+  protocol?: string,
+}
 
 type clientOpts<'adapter, 'headers, 'httpAgent, 'httpsAgent, 'data> = {
-  "accessToken": string,
-  "adapter": option<'adapter>,
-  "application": option<string>,
-  "basePath": option<string>,
-  "environment": option<string>,
-  "headers": option<'headers>,
-  "host": option<string>,
-  "httpAgent": option<'httpAgent>,
-  "httpsAgent": option<'httpsAgent>,
-  "insecure": option<bool>,
-  "integration": option<string>,
-  "logHandler": option<(. clientLogLevel, option<'data>) => unit>,
-  "proxy": option<axiosProxyConfig>,
-  "removeUnresolved": option<bool>,
-  "resolveLinks": option<bool>,
-  "retryLimit": option<int>,
-  "retryOnError": option<bool>,
-  "space": string,
-  "timeout": option<int>,
+  accessToken: string,
+  space: string,
+  adapter?: 'adapter,
+  application?: string,
+  basePath?: string,
+  environment?: string,
+  headers?: 'headers,
+  host?: string,
+  httpAgent?: 'httpAgent,
+  httpsAgent?: 'httpsAgent,
+  insecure?: bool,
+  integration?: string,
+  logHandler?: (. clientLogLevel, option<'data>) => unit,
+  proxy?: axiosProxyConfig,
+  removeUnresolved?: bool,
+  resolveLinks?: bool,
+  retryLimit?: int,
+  retryOnError?: bool,
+  timeout?: int,
 }
-
-@obj
-external makeClientOpts: (
-  ~space: string,
-  ~accessToken: string,
-  ~environment: string=?,
-  ~insecure: bool=?,
-  ~host: string=?,
-  ~basePath: string=?,
-  ~httpAgent: 'httpAgent=?,
-  ~httpsAgent: 'httpsAgent=?,
-  ~proxy: axiosProxyConfig=?,
-  ~headers: 'headers=?,
-  ~adapter: 'adapter=?,
-  ~application: string=?,
-  ~integration: string=?,
-  ~retryOnError: bool=?,
-  ~logHandler: (. clientLogLevel, option<'data>) => unit=?,
-  ~timeout: int=?,
-  ~retryLimit: int=?,
-  unit,
-) => clientOpts<'adapter, 'headers, 'httpAgent, 'httpsAgent, 'data> = ""
 
 @module("contentful")
 external createClient: clientOpts<'adapter, 'headers, 'httpAgent, 'httpsAgent, 'data> => t =

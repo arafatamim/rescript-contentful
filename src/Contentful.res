@@ -100,7 +100,7 @@ type locale = {
   "code": string,
   "name": string,
   "default": bool,
-  "fallbackCode": Js.Nullable.t<string>,
+  "fallbackCode": option<string>,
   "sys": {"id": string, "type": [#Locale], "version": int},
 }
 
@@ -154,20 +154,23 @@ type axiosProxyConfig = {
   protocol?: string,
 }
 
-type clientOpts<'adapter, 'headers, 'httpAgent, 'httpsAgent, 'data> = {
+type headers
+external makeHeaders: 't => headers = "%identity"
+
+type clientOpts = {
   accessToken: string,
   space: string,
-  adapter?: 'adapter,
+  adapter?: Obj.t,
   application?: string,
   basePath?: string,
   environment?: string,
-  headers?: 'headers,
+  headers?: Js.Dict.t<string>,
   host?: string,
-  httpAgent?: 'httpAgent,
-  httpsAgent?: 'httpsAgent,
+  httpAgent?: Obj.t,
+  httpsAgent?: Obj.t,
   insecure?: bool,
   integration?: string,
-  logHandler?: (. clientLogLevel, option<'data>) => unit,
+  logHandler?: (. clientLogLevel, Obj.t) => unit,
   proxy?: axiosProxyConfig,
   removeUnresolved?: bool,
   resolveLinks?: bool,
@@ -177,8 +180,7 @@ type clientOpts<'adapter, 'headers, 'httpAgent, 'httpsAgent, 'data> = {
 }
 
 @module("contentful")
-external createClient: clientOpts<'adapter, 'headers, 'httpAgent, 'httpsAgent, 'data> => t =
-  "createClient"
+external createClient: clientOpts => t = "createClient"
 
 @send external createAssetKey: (t, int) => Js.Promise.t<assetKey> = "createAssetKey"
 @send external getAsset: (t, string, ~query: 'query=?, unit) => Js.Promise.t<asset> = "getAsset"

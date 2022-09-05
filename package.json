@@ -1,6 +1,6 @@
 {
   "name": "rescript-contentful",
-  "version": "2.0.0",
+  "version": "2.0.0-beta.1",
   "description": "ReScript bindings for Contentful",
   "repository": {
     "type": "git",

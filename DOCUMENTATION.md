@@ -12,44 +12,42 @@ Type of the contentful.js fetcher client instance.
 type t
 ```
 
-### makeClientOpts
+### clientOpts
 ```rescript
-let makeClientOpts: (
-  ~space: string,
-  ~accessToken: string,
-  ~environment: string=?,
-  ~insecure: bool=?,
-  ~host: string=?,
-  ~basePath: string=?,
-  ~httpAgent: 'httpAgent=?,
-  ~httpsAgent: 'httpsAgent=?,
-  ~proxy: axiosProxyConfig=?,
-  ~headers: 'headers=?,
-  ~adapter: 'adapter=?,
-  ~application: string=?,
-  ~integration: string=?,
-  // [*] ~resolveLinks: bool=?,
-  // [*] ~removeUnresolved: bool=?
-  ~retryOnError: bool=?,
-  ~logHandler: (. clientLogLevel, option<'data>) => unit=?,
-  ~timeout: int=?,
-  ~retryLimit: int=?,
-  unit,
-) => clientOpts<'adapter, 'headers, 'httpAgent, 'httpsAgent, 'data>
+type clientOpts = {
+  accessToken: string,
+  space: string,
+  adapter?: Obj.t,
+  application?: string,
+  basePath?: string,
+  environment?: string,
+  headers?: Js.Dict.t<string>,
+  host?: string,
+  httpAgent?: Obj.t,
+  httpsAgent?: Obj.t,
+  insecure?: bool,
+  integration?: string,
+  logHandler?: (. clientLogLevel, option<Obj.t>) => unit,
+  proxy?: axiosProxyConfig,
+  // [*] removeUnresolved?: bool,
+  // [*] resolveLinks?: bool,
+  retryLimit?: int,
+  retryOnError?: bool,
+  timeout?: int,
+}
 ```
 `[*]`: `resolveLinks` and `removeUnresolved` are no longer supported in v10 of contentful.js and have therefore been removed in rescript-contentful v2. See the section on [migration](#migration) below.
 
 ### createClient
 ```rescript
-let createClient: clientOpts<'adapter, 'headers, 'httpAgent, 'httpsAgent, 'data> => t
+let createClient: clientOpts => t
 ```
 Create a contentful.js client instance.
 ```rescript
-let client = makeClientOpts(
-  ~space="<SPACE_ID>",
-  ~accessToken="<TOKEN>",
-  (),
-)->createClient
+let client = createClient({
+  space: "<SPACE_ID>",
+  accessToken: "<TOKEN>"
+})
 ```
 
 ### createAssetKey
@@ -147,9 +145,11 @@ let version: t => string
 # Migration
 See also [contentful.js/MIGRATION.md](https://github.com/contentful/contentful.js/blob/master/MIGRATION.md)
 ## rescript-contentful v2 (contentful.js 10.x)
+- `makeClientOpts` & `makeAxiosProxyConfig` functions have been removed. Now you must directly create a record that corresponds to their respective types, utilising the optional record fields feature that landed in [ReScript v10.0.0](https://rescript-lang.org/blog/release-10-0-0#experimental-optional-record-fields).
+
 - `resolveLinks` and `removeUnresolved` options are removed, both as client options and as query parameters to `getEntry` and `getEntries` calls. Instead, you should use the client modifiers `withoutLinkResolution` and `withoutUnresolvableLinks` as their replacements respectively to achieve the same result.
-- Calls to `getEntries` and `getEntry` no longer support setting the `locale` parameter to `'*'`. If you want to fetch entries in all locales, you should instead use the client chain `withAllLocales`.
-- Client chaining examples:
+
+Client chaining examples:
 ```rescript
 open Contentful
 
@@ -162,3 +162,8 @@ let entries = client->withoutLinkResolution->withAllLocales->getEntries()
 // returns entries in one locale, resolves linked entries, keeping unresolvable links as link object (default behavior)
 let entries = client->getEntries()
 ```
+ 
+- Calls to `getEntries` and `getEntry` no longer support setting the `locale` parameter to `'*'`. If you want to fetch entries in all locales, you should instead use the client chain `withAllLocales`.
+
+- Removed generics from type `clientOpts` and converted them to `Obj.t`. From now on, use `Obj.magic` in order to set an `Obj.t` record field. To retrieve an object key from an `Obj.t`, write a custom external binding to index an arbitrary field, for example: `@get_index external getKey: (Obj.t, string) => 't = ""`.
+

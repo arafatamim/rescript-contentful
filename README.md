@@ -6,20 +6,17 @@
 ReScript bindings (FFI) for [contentful.js](https://github.com/contentful/contentful.js), the JavaScript library for interacting with Contentful's Delivery API.
 
 ## Installation
-Run `npm install rescript-contentful contentful`, and then update the `bs-dependencies` key in your `bsconfig.json` file to include "`rescript-contentful`".
+Run `npm install rescript-contentful contentful`, and then update the `bs-dependencies` key in your `bsconfig.json` file to include "rescript-contentful".
 
 ## Usage
 ```rescript
 open Contentful
 
 // Create a Contentful client instance
-let client = createClient(
-  makeClientOpts(
-    ~accessToken="<ACCESS_TOKEN>",
-    ~space="<SPACE_ID>",
-    (),
-  ),
-)
+let client = createClient({
+  accessToken: "<ACCESS_TOKEN>",
+  space: "<SPACE_ID>",
+})
 
 // Fetch an entry
 // client is piped to the first

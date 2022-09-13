@@ -11,6 +11,7 @@
   },
   "homepage": "https://github.com/arafatamim/rescript-contentful#readme",
   "scripts": {
+    "prepublishOnly": "sh prepublish.sh",
     "prepare": "rescript clean -with-deps && rescript build",
     "build": "rescript build",
     "start": "rescript build -w",

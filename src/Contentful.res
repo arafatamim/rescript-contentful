@@ -61,7 +61,7 @@ type rec entry<'fields> = {
   "fields": 'fields,
   "metadata": metadata,
   "toPlainObject": (. unit) => Js.Json.t,
-  "update": (. unit) => Js.Promise.t<entry<'fields>>,
+  "update": (. unit) => promise<entry<'fields>>,
 }
 
 type asset = {
@@ -182,23 +182,23 @@ type clientOpts = {
 @module("contentful")
 external createClient: clientOpts => t = "createClient"
 
-@send external createAssetKey: (t, int) => Js.Promise.t<assetKey> = "createAssetKey"
-@send external getAsset: (t, string, ~query: 'query=?, unit) => Js.Promise.t<asset> = "getAsset"
-@send external getAssets: (t, ~query: 'query=?, unit) => Js.Promise.t<assetCollection> = "getAssets"
-@send external getContentType: (t, string) => Js.Promise.t<contentType> = "getContentType"
+@send external createAssetKey: (t, int) => promise<assetKey> = "createAssetKey"
+@send external getAsset: (t, string, ~query: 'query=?, unit) => promise<asset> = "getAsset"
+@send external getAssets: (t, ~query: 'query=?, unit) => promise<assetCollection> = "getAssets"
+@send external getContentType: (t, string) => promise<contentType> = "getContentType"
 @send
-external getContentTypes: (t, ~query: 'query=?, unit) => Js.Promise.t<contentTypeCollection> =
+external getContentTypes: (t, ~query: 'query=?, unit) => promise<contentTypeCollection> =
   "getContentTypes"
-@send external getEntry: (t, string) => Js.Promise.t<option<entry<'fields>>> = "getEntry"
+@send external getEntry: (t, string) => promise<option<entry<'fields>>> = "getEntry"
 @send
-external getEntries: (t, ~query: 'query=?, unit) => Js.Promise.t<entryCollection<'fields>> =
+external getEntries: (t, ~query: 'query=?, unit) => promise<entryCollection<'fields>> =
   "getEntries"
-@send external getSpace: t => Js.Promise.t<space> = "getSpace"
-@send external getLocales: t => Js.Promise.t<localeCollection> = "getLocales"
-@send external getTag: (t, string) => Js.Promise.t<tag> = "getTag"
-@send external getTags: (t, ~query: 'query=?, unit) => Js.Promise.t<tagCollection> = "getTags"
-@send external parseEntries: (t, 'raw) => Js.Promise.t<entryCollection<'fields>> = "parseEntries"
-@send external sync: (t, 'query) => Js.Promise.t<syncCollection> = "sync"
+@send external getSpace: t => promise<space> = "getSpace"
+@send external getLocales: t => promise<localeCollection> = "getLocales"
+@send external getTag: (t, string) => promise<tag> = "getTag"
+@send external getTags: (t, ~query: 'query=?, unit) => promise<tagCollection> = "getTags"
+@send external parseEntries: (t, 'raw) => promise<entryCollection<'fields>> = "parseEntries"
+@send external sync: (t, 'query) => promise<syncCollection> = "sync"
 
 @get external withoutLinkResolution: t => t = "withoutLinkResolution"
 @get external withoutUnresolvableLinks: t => t = "withoutUnresolvableLinks"

@@ -147,7 +147,7 @@ See also [contentful.js/MIGRATION.md](https://github.com/contentful/contentful.j
 ## rescript-contentful v2 (contentful.js 10.x)
 - `makeClientOpts` & `makeAxiosProxyConfig` functions have been removed. Now you must directly create a record that corresponds to their respective types, utilising the optional record fields feature that landed in [ReScript v10.0.0](https://rescript-lang.org/blog/release-10-0-0#experimental-optional-record-fields).
 
-- `resolveLinks` and `removeUnresolved` options are removed, both as client options and as query parameters to `getEntry` and `getEntries` calls. Instead, you should use the client modifiers `withoutLinkResolution` and `withoutUnresolvableLinks` as their replacements respectively to achieve the same result.
+- `resolveLinks` and `removeUnresolved` options are removed, both as client options and as query parameters to `getEntry` and `getEntries` calls. Instead, you should use the client modifiers `withoutLinkResolution` and `withoutUnresolvableLinks` as their respective replacements to achieve the same result.
 
 Client chaining examples:
 ```rescript

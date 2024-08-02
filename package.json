@@ -26,12 +26,12 @@
   "author": "Tamim Arafat <tamim.arafat@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "contentful": "10.2.0"
+    "contentful": "10.8.9"
   },
   "peerDependencies": {
-    "contentful": "^10.2.0"
+    "contentful": "^10.8.0"
   },
   "devDependencies": {
-    "rescript": "^10.1.4"
+    "rescript": "^11.1.0"
   }
 }

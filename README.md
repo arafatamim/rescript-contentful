@@ -6,7 +6,7 @@
 ReScript bindings (FFI) for [contentful.js](https://github.com/contentful/contentful.js), the JavaScript library for interacting with Contentful's Delivery API.
 
 ## Installation
-Run `npm install rescript-contentful contentful`, and then update the `bs-dependencies` key in your `bsconfig.json` file to include "rescript-contentful".
+Run `npm install rescript-contentful contentful`, and then update the `bs-dependencies` key in your `rescript.json` file to include "rescript-contentful".
 
 ## Usage
 ```rescript

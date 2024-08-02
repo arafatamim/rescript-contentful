@@ -56,13 +56,7 @@ type sys = {
   "contentType": {"sys": contentTypeLink},
 }
 
-type rec entry<'fields> = {
-  "sys": sys,
-  "fields": 'fields,
-  "metadata": metadata,
-  "toPlainObject": (. unit) => Js.Json.t,
-  "update": (. unit) => promise<entry<'fields>>,
-}
+type rec entry<'fields> = {"sys": sys, "fields": 'fields, "metadata": metadata}
 
 type asset = {
   "sys": sys,
@@ -77,7 +71,6 @@ type asset = {
     },
   },
   "metadata": metadata,
-  "toPlainObject": (. unit) => Js.Json.t,
 }
 
 type contentType = {
@@ -86,15 +79,9 @@ type contentType = {
   "description": string,
   "displayField": string,
   "fields": array<field>,
-  "toPlainObject": (. unit) => Js.Json.t,
 }
 
-type space = {
-  "sys": sys,
-  "name": string,
-  "locales": array<string>,
-  "toPlainObject": (. unit) => Js.Json.t,
-}
+type space = {"sys": sys, "name": string, "locales": array<string>}
 
 type locale = {
   "code": string,
@@ -115,17 +102,10 @@ type syncCollection = {
   "deletedEntries": array<entry<Js.Json.t>>,
   "deletedAssets": array<asset>,
   "nextSyncToken": string,
-  "toPlainObject": (. unit) => Js.Json.t,
   "stringifySafe": (option<Js.Json.t>, option<Js.Json.t>) => string,
 }
 
-type contentfulCollection<'a> = {
-  "total": int,
-  "skip": int,
-  "limit": int,
-  "items": array<'a>,
-  "toPlainObject": (. unit) => Js.Json.t,
-}
+type contentfulCollection<'a> = {"total": int, "skip": int, "limit": int, "items": array<'a>}
 
 type entryCollection<'a> = {
   "total": int,
@@ -134,8 +114,7 @@ type entryCollection<'a> = {
   "items": array<'a>,
   "errors": option<array<Js.Json.t>>,
   "includes": option<Js.Json.t>,
-  "stringifySafe": (. option<Js.Json.t>, option<Js.Json.t>) => string,
-  "toPlainObject": (. unit) => Js.Json.t,
+  "stringifySafe": (option<Js.Json.t>, option<Js.Json.t>) => string,
 }
 
 type assetCollection = contentfulCollection<asset>
@@ -154,9 +133,6 @@ type axiosProxyConfig = {
   protocol?: string,
 }
 
-type headers
-external makeHeaders: 't => headers = "%identity"
-
 type clientOpts = {
   accessToken: string,
   space: string,
@@ -170,7 +146,7 @@ type clientOpts = {
   httpsAgent?: Obj.t,
   insecure?: bool,
   integration?: string,
-  logHandler?: (. clientLogLevel, Obj.t) => unit,
+  logHandler?: (clientLogLevel, Obj.t) => unit,
   proxy?: axiosProxyConfig,
   removeUnresolved?: bool,
   resolveLinks?: bool,
@@ -183,20 +159,19 @@ type clientOpts = {
 external createClient: clientOpts => t = "createClient"
 
 @send external createAssetKey: (t, int) => promise<assetKey> = "createAssetKey"
-@send external getAsset: (t, string, ~query: 'query=?, unit) => promise<asset> = "getAsset"
-@send external getAssets: (t, ~query: 'query=?, unit) => promise<assetCollection> = "getAssets"
+@send external getAsset: (t, string, ~query: 'query=?) => promise<asset> = "getAsset"
+@send external getAssets: (t, ~query: 'query=?) => promise<assetCollection> = "getAssets"
 @send external getContentType: (t, string) => promise<contentType> = "getContentType"
 @send
-external getContentTypes: (t, ~query: 'query=?, unit) => promise<contentTypeCollection> =
+external getContentTypes: (t, ~query: 'query=?) => promise<contentTypeCollection> =
   "getContentTypes"
 @send external getEntry: (t, string) => promise<option<entry<'fields>>> = "getEntry"
 @send
-external getEntries: (t, ~query: 'query=?, unit) => promise<entryCollection<'fields>> =
-  "getEntries"
+external getEntries: (t, ~query: 'query=?) => promise<entryCollection<'fields>> = "getEntries"
 @send external getSpace: t => promise<space> = "getSpace"
 @send external getLocales: t => promise<localeCollection> = "getLocales"
 @send external getTag: (t, string) => promise<tag> = "getTag"
-@send external getTags: (t, ~query: 'query=?, unit) => promise<tagCollection> = "getTags"
+@send external getTags: (t, ~query: 'query=?) => promise<tagCollection> = "getTags"
 @send external parseEntries: (t, 'raw) => promise<entryCollection<'fields>> = "parseEntries"
 @send external sync: (t, 'query) => promise<syncCollection> = "sync"
 

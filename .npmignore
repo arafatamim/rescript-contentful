@@ -11,4 +11,5 @@ debug.log
 *.cmj
 *.cmt
 *.bs.js
+*.bs.mjs
 prepublish.sh
